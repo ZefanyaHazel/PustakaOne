@@ -13,7 +13,7 @@ $result = mysqli_query($koneksi, "SELECT * FROM peminjaman
 JOIN buku ON `peminjaman`.`buku_id` = `buku`.`id_buku`
 JOIN kategoribuku_relasi ON `kategoribuku_relasi`.`buku_id` = `buku`.`id_buku`
 JOIN kategori_buku ON `kategoribuku_relasi`.`kategori_id` = `kategori_buku`.`id_kategori`
-WHERE user_id = '$id' AND (judul LIKE '%$search%') ORDER BY tanggal_peminjaman DESC
+WHERE user_id = '$id' AND (judul LIKE '%$search%') ORDER BY FIELD(status_peminjaman, 'pending', 'terlambat', 'selesai') DESC
 ");
 
 ?>
@@ -44,11 +44,11 @@ WHERE user_id = '$id' AND (judul LIKE '%$search%') ORDER BY tanggal_peminjaman D
                             <p class="book-category"><?php echo $row["nama_kategori"]; ?></p>
                             <p class="book-release">Pinjam : <?php echo $row["tanggal_peminjaman"]; ?></p>
                             <p class="book-release">Kembali : <?php echo $row["tanggal_pengembalian"]; ?></p>
-                            <?php if ($row["status_peminjaman"] == "dipinjam") { ?>
+                            <?php if ($row["status_peminjaman"] == "pending") { ?>
                                 <span class="aktif-button">Belum selesai</span>
                             <?php } else if ($row["status_peminjaman"] == "terlambat") { ?>
                                 <span class="late-button">Terlambat</span>
-                            <?php }else { ?>
+                            <?php } else { ?>
                                 <span class="nonaktif-button">Selesai</span>
                             <?php } ?>
                         </div>
@@ -57,7 +57,7 @@ WHERE user_id = '$id' AND (judul LIKE '%$search%') ORDER BY tanggal_peminjaman D
                 }
             } else if (isset($search)) {
                 echo "<span style='text-align:center;';>Buku yang kamu cari tidak ada!</span>";
-             } else {
+            } else {
                 echo "<span style='text-align:center;';>Belum ada buku yang dipinjam!</span>";
             }
             ?>

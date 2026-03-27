@@ -19,12 +19,20 @@ if (isset($_GET["con"])) {
 
     $q = mysqli_query($koneksi, "SELECT * FROM peminjaman WHERE id_peminjaman = '$id_peminjaman'");
     $result = mysqli_fetch_array($q);
-    if ($result["status_peminjaman"] == "dikembalikan") {
-        echo "<script>alert('Data telah dikonfirmasi!'); document.location.href = 'peminjaman.php';</script>";
-        return false;
+    $durasi = $result["durasi"];
+
+    if ($result["status_peminjaman"] == "pending") {
+        mysqli_query($koneksi, "UPDATE peminjaman SET 
+        tanggal_peminjaman = NOW(),
+        tanggal_pengembalian = DATE_ADD(NOW(), INTERVAL $durasi DAY),
+        status_peminjaman = 'dipinjam' WHERE id_peminjaman = '$id_peminjaman'");
+        header("location: peminjaman.php");
+    } else if ($result["status_peminjaman"] == "dipinjam" || $result["status_peminjaman"] == "terlambat") {
+        mysqli_query($koneksi, "UPDATE peminjaman SET 
+        status_peminjaman = 'dikembalikan' WHERE id_peminjaman = '$id_peminjaman'");
+        header("location: peminjaman.php");
     }
-    mysqli_query($koneksi, "UPDATE peminjaman SET status_peminjaman = 'dikembalikan' WHERE id_peminjaman = '$id_peminjaman'");
-    header("location: peminjaman.php");
+    
 }
 
 $limit = 4;
@@ -101,10 +109,11 @@ if ($search) {
                     <th>#</th>
                     <th>Nama Peminjam</th>
                     <th>Judul Buku</th>
+                    <th>Tanggal Pengajuan</th>
                     <th>Tanggal Peminjaman</th>
                     <th>Tanggal Pengembalian</th>
                     <th>Status</th>
-                    <th>Pengembalian Buku</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -117,10 +126,13 @@ if ($search) {
                         <td><?php echo $i; ?></td>
                         <td><?php echo $row["nama_lengkap"]; ?></td>
                         <td><?php echo $row["judul"]; ?></td>
-                        <td><?php echo $row["tanggal_peminjaman"]; ?></td>
-                        <td><?php echo $row["tanggal_pengembalian"]; ?></td>
+                        <td><?php echo date("Y-m-d", strtotime($row["tanggal_pengajuan"])) ?></td>
+                        <td><?php echo date("Y-m-d", strtotime($row["tanggal_peminjaman"])) ?></td>
+                        <td><?php echo date("Y-m-d", strtotime($row["tanggal_pengembalian"])) ?></td>
                         <td>
-                            <?php if ($row["status_peminjaman"] === "dipinjam") { ?>
+                            <?php if ($row["status_peminjaman"] === "pending") { ?>
+                                <p class="taken-btn">Pending</p>
+                            <?php } else if ($row["status_peminjaman"] === "dipinjam") { ?>
                                 <p class="borrow-btn">Dipinjam</p>
                             <?php } else if ($row["status_peminjaman"] === "dikembalikan") { ?>
                                 <p class="taken-btn">Dikembalikan</p>

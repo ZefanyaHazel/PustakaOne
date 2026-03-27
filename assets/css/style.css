@@ -123,14 +123,14 @@ a {
 
 .register {
   color: var(--white-color);
-  height: 150vh;
+  height: 100vh;
   display: grid;
   align-items: center;
   justify-content: center;
   background: url(../img/cover-login.jpg);
   background-position: center;
   background-size: cover;
-  margin: 0 auto;
+  font-size: 10px;
 }
 
 .register .back {
@@ -150,8 +150,8 @@ a {
   background-color: rgba(75, 75, 75, 0.219);
   backdrop-filter: blur(10px);
   display: grid;
-  gap: 2rem;
-  padding: 3rem 3rem;
+  gap: 1rem;
+  padding: 2rem 2rem;
   border-radius: 1rem;
 }
 
@@ -918,6 +918,26 @@ a {
   flex: 0 0 70%;
 }
 
+.right .box-book-detail .avg-rating {
+  text-align: center;
+  margin-right: 3rem;
+}
+
+@media (max-width: 1000px) {
+  .right .box-book-detail .detail-info {
+    flex-wrap: wrap;
+  }
+
+  .detail-info .book-info {
+    flex: 1 1 100%;
+  }
+
+  .right .box-book-detail .avg-rating {
+    flex: 1 1 100%;
+    margin-right: 0px;
+  }
+}
+
 .detail-info .book-info .book-img {
   width: 150px;
   height: 200px;
@@ -930,10 +950,6 @@ a {
   margin-right: auto;
 }
 
-.right .box-book-detail .avg-rating {
-  text-align: center;
-  margin-right: 3rem;
-}
 
 .box-book-detail .add-fav {
   padding: 8px 15px;
@@ -995,8 +1011,9 @@ a {
 }
 
 .modal-content {
+  position: relative;
   background-color: #ffffff;
-  padding: 20px;
+  padding: 40px 20px 20px 20px;
   border-radius: 10px;
   width: 400px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -1004,13 +1021,13 @@ a {
 }
 
 .modal-content input,
-.modal-content button,
+.modal-content .submit,
 .modal-content label {
   width: 90%;
   margin: 10px 0;
 }
 
-.modal-content button {
+.modal-content .submit {
   padding: 10px;
   background-color: var(--primary-color);
   color: #ffffff;
@@ -1019,16 +1036,20 @@ a {
   cursor: pointer;
 }
 
-.modal-content button:hover {
+.modal-content .submit:hover {
   background-color: var(--primary-color);
 }
 
 .close-btn {
-  background-color: #dc3545;
-}
-
-.close-btn:hover {
-  background-color: #a71d2a;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  max-width: max-content;
+  color: #4d4d4d;
 }
 
 /* Radio Button */

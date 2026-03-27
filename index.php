@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 if (isset($_SESSION["level"])) {
@@ -45,9 +45,9 @@ if (isset($_SESSION["level"])) {
     <!-- About Section -->
     <section id="about">
         <div class="box-content">
-            <h2>Tentang Kami</h2>
+            <h2>Tentang PustakaOne.</h2>
             <hr>
-            <p>PerpusNet. merupakan aplikasi portal/penghubung perpustakaan dengan para anggota peminjam buku. Dengan aplikasi ini, Anda bisa mencari dan mengakses buku secara online dengan mudah.</p>
+            <p>PustakaOne. merupakan aplikasi perpustakaan digital yang menyimpan berbagai buku digital dan non-digital. Dengan aplikasi ini, Anda bisa mencari dan mengakses buku dan membacanya secara online dengan mudah.</p>
         </div>
     </section>
 
@@ -131,7 +131,7 @@ if (isset($_SESSION["level"])) {
             const email = document.getElementById("email").value;
             const message = document.getElementById("message").value;
 
-            const url = "https://api.whatsapp.com/send?phone=6289630307517&text=Nama%20%3A%20*" + name + "*%0AEmail%20%3A%20*" + email + "*%0A%0APesan%20%3A%20" + message ;
+            const url = "https://api.whatsapp.com/send?phone=6289630307517&text=Nama%20%3A%20*" + name + "*%0AEmail%20%3A%20*" + email + "*%0A%0APesan%20%3A%20" + message;
 
             window.open(url);
         }

@@ -8,9 +8,6 @@ if ($_SESSION["level"] != "user") {
 $id = $_SESSION["id"];
 include("header.php");
 
-
-
-
 if (isset($search) || $search == NULL) {
     if (isset($_GET["n"])) {
         $nama = $_GET["n"];
@@ -96,7 +93,6 @@ if (isset($_POST["edit"])) {
                     <span><b>Penerbit : </b><?php echo $row["penerbit"] ?></span>
                     <span><b>Kategori : </b><?php echo $row["nama_kategori"] ?></span>
                     <span><b>Tahun Terbit : </b><?php echo $row["tahun_terbit"] ?></span>
-                    <span><b>Sinopsis : </b><?php echo $row["sinopsis"] ?></span>
                 </div>
             </div>
             <div class="avg-rating">
@@ -120,12 +116,20 @@ if (isset($_POST["edit"])) {
 
             </div>
         </div>
+        <div class="sinopsis">
+            <span><b>Sinopsis : </b><?php echo $row["sinopsis"] ?></span>
+        </div>
         <span class="borrow-btn" onclick="openModal()">Pinjam</span>
         <div class="modal" id="myModal">
             <div class="modal-content">
-                <h2>Pilih Durasi:</h2>
+                <button type="button" class="close-btn" onclick="closeModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <h2>Pilih Durasi</h2>
                 <form action="form_pinjam.php" method="POST">
                     <div class="radio-group">
+                        <input type="hidden" name="id_user" value="<?= $id;  ?>">
+                        <input type="hidden" name="id_buku" value="<?= $row["id_buku"];  ?>">
                         <label>
                             <input type="radio" name="durasi" value="7" required> Seminggu
                         </label>
@@ -136,8 +140,7 @@ if (isset($_POST["edit"])) {
                             <input type="radio" name="durasi" value="30" required> Sebulan
                         </label>
                     </div>
-                    <button type="submit">Pinjam</button>
-                    <button type="button" class="close-btn" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="submit">Pinjam</button>
                 </form>
             </div>
         </div>

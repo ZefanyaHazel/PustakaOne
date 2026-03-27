@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "perpus_usk";
+$db = "db_pustakaone";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 
@@ -213,7 +213,7 @@ function tambah_peminjaman($data)
         echo "<script>alert('User masih meminjam buku yang sama!')</script>";
         return false;
     }
-    mysqli_query($koneksi, "INSERT INTO peminjaman VALUES(NULL, '$user_id', '$buku_id', NOW(), DATE_ADD(NOW(), INTERVAL $durasi DAY), '$status')");
+    mysqli_query($koneksi, "INSERT INTO peminjaman VALUES(NULL, '$user_id', '$buku_id', NOW(), '$durasi', DATE_ADD(NOW(), INTERVAL $durasi DAY), '$status', NOW())");
 
     return true;
 }
